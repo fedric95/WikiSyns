@@ -7,7 +7,6 @@ import sys
 import numpy as np
 
 
-
 class WikipediaSyns:
 
   """
@@ -81,8 +80,12 @@ class WikipediaSyns:
       self.URL = "https://en.wikipedia.org/w/api.php"
       
       
-class WikidataEntities:
+      
+  class WikidataEntities:
   
+  def __init__(self):
+    self.URL = 'https://query.wikidata.org/sparql'
+
   def get_results(self, endpoint_url, query):
       user_agent = "WDQS-example Python/%s.%s" % (sys.version_info[0], sys.version_info[1])
       sparql = SPARQLWrapper(endpoint_url, agent=user_agent)
@@ -152,35 +155,33 @@ class WikidataEntities:
 
     return(values)
 
-  def __init__(self):
-    self.URL = 'https://query.wikidata.org/sparql'
-
-def get_syns(instancetype, language):
-  wd = WikidataEntities()
-  wp = WikipediaSyns()
-
-  res_label = wd.get_entities_property(instancetype, 'rdfs:label', language)
-  res_altLabel = wd.get_entities_property(instancetype, 'skos:altLabel', language)
-
-  res_wiki = []
-  for r in res_label:
-    wp_syns = wp.get_syns(r['val'])
-    for wp_syn in wp_syns:
-      res_wiki.append({'ent': r['ent'], 'val': wp_syn})
-  
-  data_syns = []
-  for r in (res_label+res_altLabel+res_wiki):
-    data_syns.append([r['ent'], r['val']])
-  
-  
-  res_desc = wd.get_entities_property(instancetype, 'schema:description', language)
-  data_descs = []
-  for r in res_desc:
-    data_descs.append([r['ent'], r['val']])
 
 
-  data_syns = pd.DataFrame(np.array(data_syns), columns=['entity', 'value']).drop_duplicates()
-  data_descs = pd.DataFrame(np.array(data_descs), columns=['entity', 'desc']).drop_duplicates()
-  
-  res = data_syns.merge(data_descs, how='left', on='entity')
-  return(res)
+  def get_syns(self, instancetype, language):
+    wp = WikipediaSyns()
+
+    res_label = self.get_entities_property(instancetype, 'rdfs:label', language)
+    res_altLabel = wd.get_entities_property(instancetype, 'skos:altLabel', language)
+
+    res_wiki = []
+    for r in res_label:
+      wp_syns = wp.get_syns(r['val'])
+      for wp_syn in wp_syns:
+        res_wiki.append({'ent': r['ent'], 'val': wp_syn})
+    
+    data_syns = []
+    for r in (res_label+res_altLabel+res_wiki):
+      data_syns.append([r['ent'], r['val']])
+    
+    
+    res_desc = self.get_entities_property(instancetype, 'schema:description', language)
+    data_descs = []
+    for r in res_desc:
+      data_descs.append([r['ent'], r['val']])
+
+
+    data_syns = pd.DataFrame(np.array(data_syns), columns=['entity', 'value']).drop_duplicates()
+    data_descs = pd.DataFrame(np.array(data_descs), columns=['entity', 'desc']).drop_duplicates()
+    
+    res = data_syns.merge(data_descs, how='left', on='entity')
+    return(res)
