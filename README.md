@@ -1,4 +1,4 @@
-# getSyns
+# WikiSyns
 
 
 This module allow people to obtain the list of all the member of a WikiData class and not only their canonical name but also their synonyms.
