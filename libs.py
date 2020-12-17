@@ -81,7 +81,7 @@ class WikipediaSyns:
       
       
       
-  class WikidataEntities:
+ class WikidataEntities:
   
   def __init__(self):
     self.URL = 'https://query.wikidata.org/sparql'
