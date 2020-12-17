@@ -23,4 +23,5 @@ and it will install all packages from that file
 ## Example
 
 wd = WikidataEntities()
+
 res = wd.get_syns(instancetype='wd:Q5107', language='en')
