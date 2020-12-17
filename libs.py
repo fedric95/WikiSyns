@@ -81,7 +81,7 @@ class WikipediaSyns:
       
       
       
- class WikidataEntities:
+class WikidataEntities:
   
   def __init__(self):
     self.URL = 'https://query.wikidata.org/sparql'
@@ -161,7 +161,7 @@ class WikipediaSyns:
     wp = WikipediaSyns()
 
     res_label = self.get_entities_property(instancetype, 'rdfs:label', language)
-    res_altLabel = wd.get_entities_property(instancetype, 'skos:altLabel', language)
+    res_altLabel = self.get_entities_property(instancetype, 'skos:altLabel', language)
 
     res_wiki = []
     for r in res_label:
