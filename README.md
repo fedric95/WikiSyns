@@ -22,6 +22,18 @@ and it will install all packages from that file
 
 ## Example
 
+-------------------------
+
+git clone https://github.com/fedric95/WikiSyns.git
+
+cd WikiSyns
+
+pip install -r requirements.txt
+
+-------------------------
+
+from libs import *
+
 wd = WikidataEntities()
 
 res = wd.get_syns(instancetype='wd:Q5107', language='en')
