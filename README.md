@@ -14,4 +14,5 @@ All of the required packages can be found on the requirements.txt file.
 Using pip you can just do this:
 
 pip install -r requirements.txt
+
 and it will install all packages from that file
