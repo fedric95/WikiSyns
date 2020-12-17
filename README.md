@@ -32,7 +32,7 @@ pip install -r requirements.txt
 
 -------------------------
 
-from libs import *
+from WikiSyns import *
 
 wd = WikidataEntities()
 
