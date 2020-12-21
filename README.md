@@ -15,9 +15,11 @@ This module need the access to Internet because it comunicates with the WikiData
 
 Using pip you can just do this:
 
-pip install -r requirements.txt
+git clone https://github.com/fedric95/WikiSyns.git
 
-and it will install all packages from that file
+cd WikiSyns
+
+pip install .
 
 
 ## Example
@@ -28,11 +30,11 @@ git clone https://github.com/fedric95/WikiSyns.git
 
 cd WikiSyns
 
-pip install -r requirements.txt
+pip install .
 
 -------------------------
 
-from WikiSyns import *
+from WikiSyns.WikiSyns import *
 
 wd = WikidataEntities()
 
