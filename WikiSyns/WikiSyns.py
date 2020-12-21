@@ -157,20 +157,22 @@ class WikidataEntities:
 
 
 
-  def get_syns(self, instancetype, language):
+  def get_syns(self, instancetype, language, wikipedia=True):
     wp = WikipediaSyns()
 
     res_label = self.get_entities_property(instancetype, 'rdfs:label', language)
     res_altLabel = self.get_entities_property(instancetype, 'skos:altLabel', language)
-
-    res_wiki = []
-    for r in res_label:
-      wp_syns = wp.get_syns(r['val'])
-      for wp_syn in wp_syns:
-        res_wiki.append({'ent': r['ent'], 'val': wp_syn})
+    
+    if(wikipedia==True):
+      res_wiki = []
+      for r in res_label:
+        wp_syns = wp.get_syns(r['val'])
+        for wp_syn in wp_syns:
+          res_wiki.append({'ent': r['ent'], 'val': wp_syn})
+      res_altLabel = res_altLabel+res_wiki
     
     data_syns = []
-    for r in (res_label+res_altLabel+res_wiki):
+    for r in (res_label+res_altLabel):
       data_syns.append([r['ent'], r['val']])
     
     
