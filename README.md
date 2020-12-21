@@ -17,9 +17,7 @@ Using pip you can just do this:
 
 git clone https://github.com/fedric95/WikiSyns.git
 
-cd WikiSyns
-
-pip install .
+pip install ./WikiSyns
 
 
 ## Example
@@ -28,9 +26,7 @@ pip install .
 
 git clone https://github.com/fedric95/WikiSyns.git
 
-cd WikiSyns
-
-pip install .
+pip install ./WikiSyns
 
 -------------------------
 
