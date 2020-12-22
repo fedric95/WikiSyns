@@ -129,7 +129,24 @@ class WikidataEntities:
   #    values.append(result['val']['value'])
   #
   #  return(values)
-  
+  def get_entities_stock_symbols(self, instancetype):
+    query = """
+    SELECT ?entity ?val WHERE {
+        ?entity wdt:P31 {instancetype} .
+        ?entity p:P414 ?statement .
+        ?statement pq:P249 ?val .
+    }"""
+    query = query.replace('{instancetype}', instancetype)
+
+    results = self.get_results(self.URL, query)
+    values = []
+    for result in results["results"]["bindings"]:
+      values.append({'ent':result['entity']['value'], 'val': result['val']['value']})
+
+    return(values)
+    
+
+
   def get_entities_property(self, instancetype, property, language):
     if(language is not None):
       query = """
@@ -162,6 +179,7 @@ class WikidataEntities:
 
     res_label = self.get_entities_property(instancetype, 'rdfs:label', language)
     res_altLabel = self.get_entities_property(instancetype, 'skos:altLabel', language)
+    res_stockSymbol = self.get_entities_stock_symbols(instancetype)
     
     if(wikipedia==True):
       res_wiki = []
@@ -171,6 +189,8 @@ class WikidataEntities:
           res_wiki.append({'ent': r['ent'], 'val': wp_syn})
       res_altLabel = res_altLabel+res_wiki
     
+    res_altLabel = res_altLabel+res_stockSymbol
+
     data_syns = []
     for r in (res_label+res_altLabel):
       data_syns.append([r['ent'], r['val']])
@@ -185,5 +205,7 @@ class WikidataEntities:
     data_syns = pd.DataFrame(np.array(data_syns), columns=['entity', 'value']).drop_duplicates()
     data_descs = pd.DataFrame(np.array(data_descs), columns=['entity', 'desc']).drop_duplicates()
     
+
+
     res = data_syns.merge(data_descs, how='left', on='entity')
     return(res)
