@@ -9,7 +9,6 @@ The synonyms of a given name are obtained from the "Also Known As" property in W
 
 ## Requirements for installation from source/github
 This module has been tested with Python 3.6.9
-All of the required packages can be found on the requirements.txt file.
 
 This module need the access to Internet because it comunicates with the WikiData SparQL Endpoint and the Wikipedia API.
 
